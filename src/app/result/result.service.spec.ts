@@ -20,14 +20,14 @@ describe('ResultService', () => {
     })
   );
 
-  describe("aprés l'ajout d'un résultat,", () => {
+  describe('aprés l\'ajout d\'un résultat,', () => {
     beforeEach(() => {
-      const result: ResultModel = {id: 46,idOwner:76,idRecipients:[42],isSeen:false,eventResults:[],contentOfResult:"Test"};
+      const result: ResultModel = {id: 46, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
       resultService = new ResultService();
       resultService.addResult(result);
     });
 
-    it('devrait avoir une liste de 1 résultat non vue',
+    it('devrait avoir une liste de 1 résultat non vu',
       fakeAsync(() => {
         expect(resultService.getAllResult().length).toEqual(1);
       })
@@ -43,43 +43,43 @@ describe('ResultService', () => {
   });
 
   /* step 2 : 3 resultats */
-  describe("aprés l'ajout de 3 resultats,", () => {
+  describe('aprés l\'ajout de 3 resultats,', () => {
 
     beforeEach(() => {
       // init le service avec 3 resultats
     });
 
-    it("devrait avoir une liste de 3 resultats non vue aprés l\'ajout de 3 resultat.",
+    it('devrait avoir une liste de 3 resultats non vu aprés l\'ajout de 3 resultats.',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("ne devrait pas authorisé l'ajout d'un résultats avec un id existent",
+    it('ne devrait pas autoriser l\'ajout d\'un résultat avec un id existant',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir 1 resultats vue dans la liste aprés la vision d\'un resultat",
+    it('devrait avoir 1 resultat vu dans la liste aprés la vision d\'un resultat',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir les 3 resultats vue dans la liste aprés qu\'il soit tous vue",
+    it('devrait avoir les 3 resultats vus dans la liste aprés qu\'ils soient tous vus',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir plus que 2 resultats vue dans la liste aprés qu\'il soit tous vue puis 1 ou la vue est enlevé",
+    it('devrait avoir plus que 2 resultats vus dans la liste aprés qu\'ils soient tous vus puis 1 ou la vue est enlevée',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("ne devrait pas planté aprés la vision d\'un resultat non ajouté",
+    it('ne devrait pas planter aprés la vision d\'un resultat non ajouté',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
@@ -88,32 +88,32 @@ describe('ResultService', () => {
 
 
   /* step 3 (evenement) */
-  describe(",aprés l\'ajout de 3 resultats,", () => {
+  describe(',aprés l\'ajout de 3 resultats,', () => {
 
     beforeEach(() => {
       // init le service avec 3 resultats (doit etre identique que le step 2)
     });
 
-    //ps : je ne veux pas que les event de création soi initialisé dans le beforeEach ci dessus mais directement dans le resultService
-    it("devrait avoir la list des résultat dans l\'order de création ( en se basant sur les events de création)",
+    // ps : je ne veux pas que les events de création soient initialisés dans le beforeEach ci dessus mais directement dans le resultService
+    it('devrait avoir la liste des résultats dans l\'ordre de création (en se basant sur les events de création)',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir 1 event a la date de maintenant quand 1 résultat est vue",
+    it('devrait avoir 1 event a la date de maintenant quand 1 résultat est vu',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir 2 events avec 2 dates différent aprés la vision d\'un resultat puis la suppression de la vision",
+    it('devrait avoir 2 events avec 2 dates différentes aprés la vision d\'un resultat puis la suppression de la vision',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
     );
 
-    it("devrait avoir une fonction qui retourne une liste ordonnée des resultats par rapport au dernier modifier",
+    it('devrait avoir une fonction qui retourne une liste ordonnée des resultats par rapport au dernier modifié',
       fakeAsync(() => {
         expect(false).toEqual(true);
       })
@@ -122,6 +122,6 @@ describe('ResultService', () => {
   });
 
 
-  /* proposé de nouveau test */
+  /* proposé de nouveaux tests */
 
 });

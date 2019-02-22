@@ -10,32 +10,31 @@ export class ResultService {
 
   constructor() { }
 
-  public addResult(newResult:ResultModel) {
-    
+  public addResult(newResult: ResultModel) {
+
   }
 
-  public seenResult(idResult:number) {
-    
+  public seenResult(idResult: number) {
+
   }
 
-  public unseenResult(idResult:number) {
-    
+  public unseenResult(idResult: number) {
+
   }
 
-  public getAllResult() : Array<ResultModel> {
+  public getAllResult(): Array<ResultModel> {
     return null;
   }
 
-  public getAllResultSeen() : Array<ResultModel> {
+  public getAllResultSeen(): Array<ResultModel> {
     return null;
   }
 
-  public getAllResultUnSeen() : Array<ResultModel> {
+  public getAllResultUnSeen(): Array<ResultModel> {
     return null;
   }
 
-  public numberOfEventSeen() : number
-  {
+  public numberOfEventSeen(): number {
     return null;
   }
 }

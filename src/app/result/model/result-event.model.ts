@@ -1,5 +1,7 @@
+type stateResult = 'created' | 'received' | 'seen';
+
 export interface ResultEventModel {
-    id:String; // created | received | seen
-    idOwner:number;
-    createdAt:Date;
-  }
+  id: stateResult; // created | received | seen
+  idOwner: number;
+  createdAt: Date;
+}
