@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ResultModel } from './model/result.model';
 import { ResultEventModel, stateResult } from './model/result-event.model';
-import { unusedValueExportToPlacateAjd } from '@angular/core/src/render3/interfaces/injector';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import { AddResult, SeenResult, UnseenResult } from '../store/actions/results.actions';
-import { getSeenResults, getUnseenResults, getResultById, getOrderedResults } from '../store/reducers/results.reducers';
-import { ResultsSortPipe } from './ResultsSort.pipe';
+import { getSeenResults, getUnseenResults} from '../store/reducers/results.reducers';
 
 @Injectable({
   providedIn: 'root'

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { ResultsReducer } from '../store/reducers/results.reducers';
 import { AppState } from '../store/app.state';
-import { map, tap } from 'rxjs/operators';
 
 
 describe('ResultService', () => {
