@@ -3,6 +3,7 @@ import { ADD_RESULT, SEEN_RESULT, UNSEEN_RESULT } from '../actions/results.actio
 import { Actions as ResultsActions} from '../actions/results.actions';
 import { initialResults } from '../app.state';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { ResultEventModel } from 'src/app/result/model/result-event.model';
 
 export function ResultsReducer(state: ResultModel[] = initialResults, action: ResultsActions ) {
     console.log(action.type);
@@ -59,12 +60,3 @@ export const getUnseenResults = createSelector(
         return results.filter((result: ResultModel) => !result.isSeen);
     }
 );
-export const getResultById = (idResult: number) => createSelector(
-    getResults,
-    (results: ResultModel[]) => {
-        console.log('getResultById Selector');
-        const index = results.findIndex((result: ResultModel) => result.id === idResult);
-        return (index === -1) ? undefined : results[index];
-    }
-);
-

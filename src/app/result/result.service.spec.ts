@@ -160,6 +160,7 @@ describe('ResultService', () => {
     let allResults: ResultModel[];
     let allSeenResults: ResultModel[];
     let allUnseenResults: ResultModel[];
+    let allOrderedResults: ResultModel[];
 
     beforeEach(fakeAsync(() => {
       store = TestBed.get(Store);
@@ -216,7 +217,17 @@ describe('ResultService', () => {
 
     it('devrait avoir une fonction qui retourne une liste ordonnée des resultats par rapport au dernier modifié',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        jasmine.clock().tick(2);
+
+        const idResultToSee = existingIds[2];
+        resultService.seenResult(idResultToSee);
+
+        resultService.getOrderedAllResult().subscribe(
+          orderedResults => allOrderedResults = orderedResults
+        );
+        expect(allOrderedResults[0].id).toEqual(idResultToSee);
+        expect(resultService.getLastEvent(allOrderedResults[0]).createdAt.getTime()).toBeGreaterThan(resultService.getLastEvent(allOrderedResults[1]).createdAt.getTime());
+        expect(resultService.getLastEvent(allOrderedResults[1]).createdAt.getTime()).toBeGreaterThan(resultService.getLastEvent(allOrderedResults[2]).createdAt.getTime());
       })
     );
 

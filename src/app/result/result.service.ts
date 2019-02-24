@@ -3,10 +3,12 @@ import { ResultModel } from './model/result.model';
 import { ResultEventModel, stateResult } from './model/result-event.model';
 import { unusedValueExportToPlacateAjd } from '@angular/core/src/render3/interfaces/injector';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import { AddResult, SeenResult, UnseenResult } from '../store/actions/results.actions';
-import { getSeenResults, getUnseenResults, getResultById } from '../store/reducers/results.reducers';
+import { getSeenResults, getUnseenResults, getResultById, getOrderedResults } from '../store/reducers/results.reducers';
+import { ResultsSortPipe } from './ResultsSort.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +53,18 @@ export class ResultService {
     return ((creationEventResult ===  undefined) ? undefined : creationEventResult.createdAt);
   }
 
-  public getResultById(idResult: number): Observable<ResultModel> {
-    console.log('getResultById', idResult);
-    return this.store.select(getResultById(idResult));
+  public getOrderedAllResult(): Observable<ResultModel[]> {
+    return this.store.select('results').pipe(
+      map((results: ResultModel[]) => {
+        results.sort((resultA, resultB) => this.getLastEvent(resultB).createdAt.getTime() - this.getLastEvent(resultA).createdAt.getTime());
+        return results;
+      }
+    ));
+  }
+
+  public getLastEvent(result: ResultModel): ResultEventModel {
+    return result.eventResults.reduce((eventA, eventB) =>
+            eventA.createdAt.getTime() > eventB.createdAt.getTime() ? eventA : eventB
+      );
   }
 }
