@@ -69,7 +69,6 @@ describe('ResultService', () => {
         resultService.seenResult(46);
         expect(allSeenResults.length).toEqual(1);
         expect(allResults[0].isSeen).toEqual(true);
-        console.log(allResults, allSeenResults, allUnseenResults);
       })
     );
   });
@@ -77,13 +76,32 @@ describe('ResultService', () => {
   /* step 2 : 3 resultats */
   describe('aprés l\'ajout de 3 resultats,', () => {
 
+    const existingIds = [46, 47, 48];
+    let idSub: Subscription;
+    let allUnseenResults: ResultModel[];
+
     beforeEach(() => {
       // init le service avec 3 resultats
+      store = TestBed.get(Store);
+      resultService = new ResultService(store);
+
+      idSub = resultService.getAllResult().subscribe(results => {
+          allUnseenResults = results.filter(res => res && !res.isSeen);
+        }
+      );
+
+      resultService.addResult({id: existingIds[0], idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test46'});
+      resultService.addResult({id: existingIds[1], idOwner: 75, idRecipients: [34], isSeen: false, eventResults: [], contentOfResult: 'Test47'});
+      resultService.addResult({id: existingIds[2], idOwner: 76, idRecipients: [55], isSeen: false, eventResults: [], contentOfResult: 'Test48'});
+    });
+
+    afterEach(() => {
+      idSub.unsubscribe();
     });
 
     it('devrait avoir une liste de 3 resultats non vu aprés l\'ajout de 3 resultats.',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        expect(allUnseenResults.length).toEqual(3);
       })
     );
 
