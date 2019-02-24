@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ResultModel } from './model/result.model';
-import { ResultEventModel } from './model/result-event.model';
+import { ResultEventModel, stateResult } from './model/result-event.model';
 import { unusedValueExportToPlacateAjd } from '@angular/core/src/render3/interfaces/injector';
 import { Observable, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -44,5 +44,10 @@ export class ResultService {
 
   public numberOfEventSeen(): number {
     return null;
+  }
+
+  public getDate(wantedDate: stateResult, result: ResultModel): Date {
+    const creationEventResult: ResultEventModel | undefined = result.eventResults.find(eventResult => eventResult.id === wantedDate);
+    return ((creationEventResult ===  undefined) ? undefined : creationEventResult.createdAt);
   }
 }

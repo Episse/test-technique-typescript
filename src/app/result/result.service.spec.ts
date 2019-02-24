@@ -6,6 +6,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { ResultsReducer } from '../store/reducers/results.reducers';
 import { AppState } from '../store/app.state';
 
+
 describe('ResultService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
@@ -114,7 +115,7 @@ describe('ResultService', () => {
       fakeAsync(() => {
         const previousLenth = allResults.length;
         resultService.addResult({id: existingIds[0], idOwner: 4, idRecipients: [32], isSeen: false, eventResults: [], contentOfResult: 'Test'});
-        expect(allResults.length).toEqual(previousLenth);      
+        expect(allResults.length).toEqual(previousLenth);
       })
     );
 
@@ -153,14 +154,40 @@ describe('ResultService', () => {
   /* step 3 (evenement) */
   describe(',aprés l\'ajout de 3 resultats,', () => {
 
+    const existingIds = [46, 47, 48];
+    let idSub: Subscription;
+    let allResults: ResultModel[];
+    let allSeenResults: ResultModel[];
+    let allUnseenResults: ResultModel[];
+
     beforeEach(() => {
-      // init le service avec 3 resultats (doit etre identique que le step 2)
+      store = TestBed.get(Store);
+      resultService = new ResultService(store);
+
+      idSub = resultService.getAllResult().subscribe(results => {
+          allResults = results;
+          allSeenResults = results.filter(res => res.isSeen);
+          allUnseenResults = results.filter(res => res && !res.isSeen);
+        }
+      );
+
+      resultService.addResult({id: existingIds[0], idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test46'});
+      resultService.addResult({id: existingIds[1], idOwner: 75, idRecipients: [34], isSeen: false, eventResults: [], contentOfResult: 'Test47'});
+      resultService.addResult({id: existingIds[2], idOwner: 76, idRecipients: [55], isSeen: false, eventResults: [], contentOfResult: 'Test48'});
+    });
+
+    afterEach(() => {
+      idSub.unsubscribe();
     });
 
     // ps : je ne veux pas que les events de création soient initialisés dans le beforeEach ci dessus mais directement dans le resultService
     it('devrait avoir la liste des résultats dans l\'ordre de création (en se basant sur les events de création)',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        const date1 = resultService.getDate('created', allResults[0]);
+        const date2 = resultService.getDate('created', allResults[1]);
+        const date3 = resultService.getDate('created', allResults[2]);
+        expect(date1.valueOf()).toBeLessThanOrEqual(date2.valueOf());
+        expect(date2.valueOf()).toBeLessThanOrEqual(date3.valueOf());
       })
     );
 

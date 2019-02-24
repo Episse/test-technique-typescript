@@ -1,4 +1,4 @@
-type stateResult = 'created' | 'received' | 'seen';
+export type stateResult = 'created' | 'received' | 'seen';
 
 export interface ResultEventModel {
   id: stateResult; // created | received | seen
