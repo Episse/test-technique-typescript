@@ -204,7 +204,13 @@ describe('ResultService', () => {
 
     it('devrait avoir 2 events avec 2 dates différentes aprés la vision d\'un resultat puis la suppression de la vision',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        jasmine.clock().tick(2);
+        const idResultToChange = existingIds[1];
+        resultService.seenResult(idResultToChange);
+        resultService.unseenResult(idResultToChange);
+        const eventResults = allResults.find(result => result.id === idResultToChange).eventResults;
+        expect(eventResults.length).toEqual(2);
+        expect(eventResults[0].createdAt.getTime()).not.toEqual(eventResults[1].createdAt.getTime());
       })
     );
 
