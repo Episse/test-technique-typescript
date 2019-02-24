@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { ResultsReducer } from '../store/reducers/results.reducers';
 import { AppState } from '../store/app.state';
+import { map, tap } from 'rxjs/operators';
 
 
 describe('ResultService', () => {
@@ -193,7 +194,9 @@ describe('ResultService', () => {
 
     it('devrait avoir 1 event a la date de maintenant quand 1 résultat est vu',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        const dateNow = new Date();
+        resultService.seenResult(existingIds[1]);
+        expect(allResults.find(result => (result.eventResults.find(eventRes => eventRes.createdAt.getTime() === dateNow.getTime()) !== undefined))).toBeDefined();
       })
     );
 

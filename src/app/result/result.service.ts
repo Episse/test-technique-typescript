@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import { AddResult, SeenResult, UnseenResult } from '../store/actions/results.actions';
-import { getSeenResults, getUnseenResults } from '../store/reducers/results.reducers';
+import { getSeenResults, getUnseenResults, getResultById } from '../store/reducers/results.reducers';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,12 @@ export class ResultService {
   }
 
   public getDate(wantedDate: stateResult, result: ResultModel): Date {
-    const creationEventResult: ResultEventModel | undefined = result.eventResults.find(eventResult => eventResult.id === wantedDate);
+    const creationEventResult: ResultEventModel | undefined = result.eventResults.length > 0 ? result.eventResults.find(eventResult => eventResult.id === wantedDate) : undefined;
     return ((creationEventResult ===  undefined) ? undefined : creationEventResult.createdAt);
+  }
+
+  public getResultById(idResult: number): Observable<ResultModel> {
+    console.log('getResultById', idResult);
+    return this.store.select(getResultById(idResult));
   }
 }

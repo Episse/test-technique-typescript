@@ -50,13 +50,21 @@ export const getResults = createFeatureSelector<ResultModel[]>('results');
 export const getSeenResults = createSelector(
     getResults,
     (results: ResultModel[]) => {
-          return results.filter((result: ResultModel) => result.isSeen);
+        return results.filter((result: ResultModel) => result.isSeen);
     }
 );
 export const getUnseenResults = createSelector(
     getResults,
     (results: ResultModel[]) => {
-          return results.filter((result: ResultModel) => !result.isSeen);
+        return results.filter((result: ResultModel) => !result.isSeen);
+    }
+);
+export const getResultById = (idResult: number) => createSelector(
+    getResults,
+    (results: ResultModel[]) => {
+        console.log('getResultById Selector');
+        const index = results.findIndex((result: ResultModel) => result.id === idResult);
+        return (index === -1) ? undefined : results[index];
     }
 );
 
