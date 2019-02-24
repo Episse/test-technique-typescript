@@ -126,7 +126,8 @@ describe('ResultService', () => {
 
     it('devrait avoir les 3 resultats vus dans la liste aprés qu\'ils soient tous vus',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        allResults.map(result => resultService.seenResult(result.id));
+        expect(allSeenResults.length).toEqual(3);
       })
     );
 
