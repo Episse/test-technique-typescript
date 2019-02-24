@@ -78,6 +78,7 @@ describe('ResultService', () => {
 
     const existingIds = [46, 47, 48];
     let idSub: Subscription;
+    let allResults: ResultModel[];
     let allUnseenResults: ResultModel[];
 
     beforeEach(() => {
@@ -86,6 +87,7 @@ describe('ResultService', () => {
       resultService = new ResultService(store);
 
       idSub = resultService.getAllResult().subscribe(results => {
+          allResults = results;
           allUnseenResults = results.filter(res => res && !res.isSeen);
         }
       );
@@ -107,7 +109,9 @@ describe('ResultService', () => {
 
     it('ne devrait pas autoriser l\'ajout d\'un résultat avec un id existant',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        const previousLenth = allResults.length;
+        resultService.addResult({id: existingIds[0], idOwner: 4, idRecipients: [32], isSeen: false, eventResults: [], contentOfResult: 'Test'});
+        expect(allResults.length).toEqual(previousLenth);      
       })
     );
 

@@ -8,6 +8,9 @@ export function ResultsReducer(state: ResultModel[] = initialResults, action: Re
     console.log(action.type);
     switch (action.type) {
         case ADD_RESULT:
+            if (state.find(result => result.id === action.payload.id)) {
+                return state;
+            }
             action.payload.eventResults.push(
                 {
                     id: 'created',
