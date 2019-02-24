@@ -16,7 +16,10 @@ describe('ResultService', () => {
   /* step 1 : initialisation du projet avec 0 et 1 resultat */
   it('devrait être initialisé avec une liste de résultat vide',
     fakeAsync(() => {
-      expect(resultService.getAllResult()).toEqual([]);
+      let res: ResultModel[];
+      const idSub = resultService.getAllResult().subscribe(results => res = results);
+      expect(res).toEqual([]);
+      idSub.unsubscribe();
     })
   );
 
