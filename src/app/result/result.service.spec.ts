@@ -2,11 +2,20 @@ import { TestBed, fakeAsync } from '@angular/core/testing';
 import { ResultService } from './result.service';
 import { ResultModel } from './model/result.model';
 import { Subscription } from 'rxjs';
+import { StoreModule, Store } from '@ngrx/store';
+import { ResultsReducer } from '../store/reducers/results.reducers';
+import { AppState } from '../store/app.state';
 
 describe('ResultService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [
+      StoreModule.forRoot({results: ResultsReducer})
+    ]
+}).compileComponents());
 
   let resultService: ResultService;
+  let store: Store<AppState>;
+
 
   it('should be created', () => {
     resultService = TestBed.get(ResultService);
@@ -26,12 +35,22 @@ describe('ResultService', () => {
 
   describe('aprés l\'ajout d\'un résultat,', () => {
     let allResults: ResultModel[];
+    let allSeenResults: ResultModel[];
+    let allUnseenResults: ResultModel[];
     let idSub: Subscription;
+    const existingId = 46;
 
     beforeEach(() => {
-      resultService = new ResultService();
-      idSub = resultService.getAllResult().subscribe(results => allResults = results);
-      const result: ResultModel = {id: 46, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
+      store = TestBed.get(Store);
+      resultService = new ResultService(store);
+      idSub = resultService.getAllResult().subscribe(results => {
+          allResults = results;
+          allSeenResults = results.filter(res => res.isSeen);
+          allUnseenResults = results.filter(res => res && !res.isSeen);
+          console.log('subscription', allResults, allSeenResults, allUnseenResults);
+        }
+      );
+      const result: ResultModel = {id: existingId, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
       resultService.addResult(result);
     });
 
@@ -48,8 +67,9 @@ describe('ResultService', () => {
     it('devrait avoir une liste de 1 résultat vue aprés la vision de ce résultat',
       fakeAsync(() => {
         resultService.seenResult(46);
-        expect(resultService.getAllResultSeen().length).toEqual(1);
-        expect(resultService.getAllResult()[1].isSeen).toEqual(true);
+        expect(allSeenResults.length).toEqual(1);
+        expect(allResults[0].isSeen).toEqual(true);
+        console.log(allResults, allSeenResults, allUnseenResults);
       })
     );
   });
