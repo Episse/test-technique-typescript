@@ -1,6 +1,7 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
 import { ResultService } from './result.service';
 import { ResultModel } from './model/result.model';
+import { Subscription } from 'rxjs';
 
 describe('ResultService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -24,15 +25,23 @@ describe('ResultService', () => {
   );
 
   describe('aprés l\'ajout d\'un résultat,', () => {
+    let allResults: ResultModel[];
+    let idSub: Subscription;
+
     beforeEach(() => {
-      const result: ResultModel = {id: 46, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
       resultService = new ResultService();
+      idSub = resultService.getAllResult().subscribe(results => allResults = results);
+      const result: ResultModel = {id: 46, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
       resultService.addResult(result);
+    });
+
+    afterEach(() => {
+      idSub.unsubscribe();
     });
 
     it('devrait avoir une liste de 1 résultat non vu',
       fakeAsync(() => {
-        expect(resultService.getAllResult().length).toEqual(1);
+        expect(allResults.length).toEqual(1);
       })
     );
 
