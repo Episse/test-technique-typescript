@@ -77,6 +77,7 @@ describe('ResultService', () => {
   describe('aprés l\'ajout de 3 resultats,', () => {
 
     const existingIds = [46, 47, 48];
+    const missingId = 22;
     let idSub: Subscription;
     let allResults: ResultModel[];
     let allSeenResults: ResultModel[];
@@ -141,7 +142,9 @@ describe('ResultService', () => {
 
     it('ne devrait pas planter aprés la vision d\'un resultat non ajouté',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        spyOn(resultService, 'seenResult');
+        resultService.seenResult(missingId);
+        expect(resultService.seenResult).toHaveBeenCalled();
       })
     );
   });
