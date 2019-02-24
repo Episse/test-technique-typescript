@@ -161,7 +161,7 @@ describe('ResultService', () => {
     let allSeenResults: ResultModel[];
     let allUnseenResults: ResultModel[];
 
-    beforeEach(() => {
+    beforeEach(fakeAsync(() => {
       store = TestBed.get(Store);
       resultService = new ResultService(store);
 
@@ -173,9 +173,11 @@ describe('ResultService', () => {
       );
 
       resultService.addResult({id: existingIds[0], idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test46'});
+      jasmine.clock().tick(2);
       resultService.addResult({id: existingIds[1], idOwner: 75, idRecipients: [34], isSeen: false, eventResults: [], contentOfResult: 'Test47'});
+      jasmine.clock().tick(2);
       resultService.addResult({id: existingIds[2], idOwner: 76, idRecipients: [55], isSeen: false, eventResults: [], contentOfResult: 'Test48'});
-    });
+    }));
 
     afterEach(() => {
       idSub.unsubscribe();
@@ -187,8 +189,8 @@ describe('ResultService', () => {
         const date1 = resultService.getDate('created', allResults[0]);
         const date2 = resultService.getDate('created', allResults[1]);
         const date3 = resultService.getDate('created', allResults[2]);
-        expect(date1.valueOf()).toBeLessThanOrEqual(date2.valueOf());
-        expect(date2.valueOf()).toBeLessThanOrEqual(date3.valueOf());
+        expect(date1.valueOf()).toBeLessThan(date2.valueOf());
+        expect(date2.valueOf()).toBeLessThan(date3.valueOf());
       })
     );
 
