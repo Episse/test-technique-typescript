@@ -79,6 +79,7 @@ describe('ResultService', () => {
     const existingIds = [46, 47, 48];
     let idSub: Subscription;
     let allResults: ResultModel[];
+    let allSeenResults: ResultModel[];
     let allUnseenResults: ResultModel[];
 
     beforeEach(() => {
@@ -88,6 +89,7 @@ describe('ResultService', () => {
 
       idSub = resultService.getAllResult().subscribe(results => {
           allResults = results;
+          allSeenResults = results.filter(res => res.isSeen);
           allUnseenResults = results.filter(res => res && !res.isSeen);
         }
       );
@@ -117,7 +119,8 @@ describe('ResultService', () => {
 
     it('devrait avoir 1 resultat vu dans la liste aprés la vision d\'un resultat',
       fakeAsync(() => {
-        expect(false).toEqual(true);
+        resultService.seenResult(existingIds[1]);
+        expect(allSeenResults.length).toEqual(1);
       })
     );
 
