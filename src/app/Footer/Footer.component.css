@@ -1,0 +1,24 @@
+.container
+{
+    height: 10vh;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+
+    font-size: 1em;
+    color : white;
+    background-color: black;
+    text-shadow:  1px 1px 1px #f740f4;
+}
+
+.content
+{
+    margin : 0;
+    align-self:center ;
+}

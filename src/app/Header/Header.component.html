@@ -1,0 +1,12 @@
+
+
+<div class="container">
+  <i class="content material-icons" (click)="op.toggle($event)">menu</i> 
+  <p class="content title"> Test technique de Sophie</p>
+  <p></p>
+</div>
+<p-overlayPanel #op class="overlayPanel" >
+  <p (click)="goHome()"><i class="material-icons" >home</i> Home</p>
+  <p (click)="goRecap()"><i class="material-icons">fiber_new</i> Récapitulatif des résultats</p>
+  <p (click)="goAll()"><i class="material-icons">notifications</i> Tous les résultats</p>
+</p-overlayPanel>

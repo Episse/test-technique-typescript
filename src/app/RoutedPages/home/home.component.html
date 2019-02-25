@@ -1,0 +1,6 @@
+<div class="container">
+  <button *ngIf="getNbResults() === 0" mat-flat-button  color="accent" class="flexContent" (click)="initResults()">
+    Initialiser les résultats
+  </button>
+  <p *ngIf="getNbResults() > 0"> Les résultats sont déjà initialisés.</p>
+</div>

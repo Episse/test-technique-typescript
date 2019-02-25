@@ -1,0 +1,11 @@
+<div class="container" >
+  <div class="newMessageArea" [ngClass]="getCursorClass()" (click)="goToResults()"
+  matBadge="{{unseenResults.length}}" matBadgePosition="before" matBadgeOverlap="false" matBadgeColor="accent">
+      <div *ngIf="unseenResults.length>0; then unseenResult; else noUnseenResult"></div>
+      <ng-template #unseenResult>
+          <i class="material-icons">fiber_new</i> 
+          <span>Nouveaux résultats</span>
+      </ng-template>
+      <ng-template #noUnseenResult>Aucun nouveau résultat</ng-template>
+  </div>
+</div>
