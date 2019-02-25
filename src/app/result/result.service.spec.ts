@@ -28,7 +28,7 @@ describe('ResultService', () => {
   it('devrait être initialisé avec une liste de résultat vide',
     fakeAsync(() => {
       let res: ResultModel[];
-      const idSub = resultService.getAllResult().subscribe(results => res = results);
+      const idSub = resultService.getAllResults().subscribe(results => res = results);
       expect(res).toEqual([]);
       idSub.unsubscribe();
     })
@@ -44,7 +44,7 @@ describe('ResultService', () => {
     beforeEach(() => {
       store = TestBed.get(Store);
       resultService = new ResultService(store);
-      idSub = resultService.getAllResult().subscribe(results => {
+      idSub = resultService.getAllResults().subscribe(results => {
           allResults = results;
           allSeenResults = results.filter(res => res.isSeen);
           allUnseenResults = results.filter(res => res && !res.isSeen);
@@ -88,7 +88,7 @@ describe('ResultService', () => {
       store = TestBed.get(Store);
       resultService = new ResultService(store);
 
-      idSub = resultService.getAllResult().subscribe(results => {
+      idSub = resultService.getAllResults().subscribe(results => {
           allResults = results;
           allSeenResults = results.filter(res => res.isSeen);
           allUnseenResults = results.filter(res => res && !res.isSeen);
@@ -164,7 +164,7 @@ describe('ResultService', () => {
       store = TestBed.get(Store);
       resultService = new ResultService(store);
 
-      idSub = resultService.getAllResult().subscribe(results => {
+      idSub = resultService.getAllResults().subscribe(results => {
           allResults = results;
           allSeenResults = results.filter(res => res.isSeen);
           allUnseenResults = results.filter(res => res && !res.isSeen);
@@ -243,7 +243,7 @@ describe('ResultService', () => {
     beforeEach(() => {
       store = TestBed.get(Store);
       resultService = new ResultService(store);
-      idSub = resultService.getAllResult().subscribe(results => {
+      idSub = resultService.getAllResults().subscribe(results => {
         allResults = results;
       }
     );

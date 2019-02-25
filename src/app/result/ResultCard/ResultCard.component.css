@@ -1,0 +1,20 @@
+.container
+{
+    max-width: 50%;
+    min-width: 400px;
+    
+    border : 2px solid burlywood;
+    background-color: beige;
+    border-radius: 25px;
+    margin : 5px;
+
+    display : flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.flexContent
+{
+    align-self: center;
+}

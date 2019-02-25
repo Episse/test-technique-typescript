@@ -1,3 +1,37 @@
-<p>
-  ResultList works!
-</p>
+<div class="container" *ngIf="sresults && usresults">
+  <div [ngSwitch]="usresults.length" id="unseenResults" #unseenResults>
+    <div *ngSwitchCase="0">
+      <h3>Pas de nouveau résultat</h3>
+    </div>
+    <div *ngSwitchCase="1">
+      <h3>Nouveau résultat :</h3>
+      <ul>
+        <app-ResultCard [result]="usresults[0]"></app-ResultCard>
+      </ul>
+    </div>
+    <div *ngSwitchDefault>
+      <h3>Nouveaux résultats :</h3>
+      <ul>
+        <app-ResultCard *ngFor="let result of usresults" [result]="result"></app-ResultCard>
+      </ul>
+    </div>
+  </div>
+
+  <div [ngSwitch]="sresults.length" id="seenResults" #seenResults>
+    <div *ngSwitchCase="0">
+      <h3>Pas d'ancien résultat</h3>
+    </div>
+    <div *ngSwitchCase="1">
+      <h3>Ancien résultat :</h3>
+      <ul>
+        <app-ResultCard [result]="sresults[0]"></app-ResultCard>
+      </ul>
+    </div>
+    <div *ngSwitchDefault>
+      <h3>Anciens résultats :</h3>
+      <ul>
+        <app-ResultCard *ngFor="let result of sresults" [result]="result"></app-ResultCard>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,9 @@
-<p>
-  ResultCard works!
-</p>
+<div *ngIf="result" class="container" (click)="emitClic()">
+  <p class="flexContent">Id : {{result.id}}</p>
+  <p class="flexContent">IdOwner : {{result.idOwner}}</p>
+  <p class="flexContent">{{getCreationDate() | date:'d MMM y hh:mm:ss'}}</p>
+  <button mat-icon-button  color="accent" class="flexContent" (click)="seenUnseen()">
+    <i class="material-icons" *ngIf="!result.isSeen">visibility</i>
+    <i class="material-icons" *ngIf="result.isSeen">visibility_off</i>
+  </button>
+</div>

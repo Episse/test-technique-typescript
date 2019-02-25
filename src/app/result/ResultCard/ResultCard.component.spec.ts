@@ -1,18 +1,24 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ResultsReducer } from '../../store/reducers/results.reducers';
 
 import { ResultCardComponent } from './ResultCard.component';
 import { MockResultCardParentComponent } from './ResultCardMockParent.component';
+import { StoreModule } from '@ngrx/store';
+import { ResultService } from '../result.service';
 
-describe('MockResultCardParentComponent', () => {
+describe('ResultCardComponent in MockResultCardParentComponent', () => {
   let component: MockResultCardParentComponent;
   let fixture: ComponentFixture<MockResultCardParentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultCardComponent, MockResultCardParentComponent ]
+      declarations: [ ResultCardComponent, MockResultCardParentComponent ],
+      imports: [
+        StoreModule.forRoot({ResultsReducer})
+      ],
+      providers: [ResultService]
     })
     .compileComponents();
   }));
@@ -43,6 +49,12 @@ describe('MockResultCardParentComponent', () => {
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('app-ResultCard'));
     el.nativeElement.click();
-    expect(component.doAction).toHaveBeenCalledWith('clicked');
-});
+    expect(component.doAction).not.toHaveBeenCalledWith('clicked');
+  });
+
+  it('should have exactly one icon', () => {
+    fixture.detectChanges();
+    const nbEl = fixture.debugElement.queryAll(By.css('app-ResultCard i')).length;
+    expect(nbEl).toEqual(1);
+  });
 });

@@ -30,15 +30,15 @@ export class ResultService {
 
   }
 
-  public getAllResult(): Observable<ResultModel[]> {
+  public getAllResults(): Observable<ResultModel[]> {
     return this.store.select('results');
   }
 
-  public getAllResultSeen(): Observable<ResultModel[]> {
+  public getAllResultsSeen(): Observable<ResultModel[]> {
     return this.store.select(getSeenResults);
   }
 
-  public getAllResultUnSeen(): Observable<ResultModel[]> {
+  public getAllResultsUnSeen(): Observable<ResultModel[]> {
     return this.store.select(getUnseenResults);
   }
 
