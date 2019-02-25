@@ -3,10 +3,8 @@ import { ADD_RESULT, SEEN_RESULT, UNSEEN_RESULT } from '../actions/results.actio
 import { Actions as ResultsActions} from '../actions/results.actions';
 import { initialResults } from '../app.state';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { ResultEventModel } from 'src/app/result/model/result-event.model';
 
 export function ResultsReducer(state: ResultModel[] = initialResults, action: ResultsActions ) {
-    console.log(action.type);
     switch (action.type) {
         case ADD_RESULT:
             if (state.find(result => result.id === action.payload.id)) {

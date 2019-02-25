@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 import { ResultsReducer } from '../store/reducers/results.reducers';
 import { AppState } from '../store/app.state';
-import { map, tap } from 'rxjs/operators';
 
 
 describe('ResultService', () => {
@@ -49,7 +48,6 @@ describe('ResultService', () => {
           allResults = results;
           allSeenResults = results.filter(res => res.isSeen);
           allUnseenResults = results.filter(res => res && !res.isSeen);
-          console.log('subscription', allResults, allSeenResults, allUnseenResults);
         }
       );
       const result: ResultModel = {id: existingId, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test'};
@@ -234,6 +232,60 @@ describe('ResultService', () => {
   });
 
 
-  /* proposé de nouveaux tests */
+  /* proposer de nouveaux tests */
+  describe('ADDED_TEST : ', () => {
 
+    const existingId = 47;
+    const missingId = 22;
+    let idSub: Subscription;
+    let allResults: ResultModel[];
+
+    beforeEach(() => {
+      store = TestBed.get(Store);
+      resultService = new ResultService(store);
+      idSub = resultService.getAllResult().subscribe(results => {
+        allResults = results;
+      }
+    );
+    });
+
+    afterEach(() => {
+      idSub.unsubscribe();
+    });
+
+    it('getDate devrait renvoyer la wantedDate du result',
+      fakeAsync(() => {
+        jasmine.clock().tick(2);
+        const creationDate = new Date();
+        resultService.addResult({id: existingId, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test46'});
+        jasmine.clock().tick(2);
+        const seenDate = new Date();
+        resultService.seenResult(existingId);
+
+        const result = allResults.find(res => res.id === existingId);
+        expect(resultService.getDate('created', result).getTime()).toEqual(creationDate.getTime());
+        expect(resultService.getDate('seen', result).getTime()).toEqual(seenDate.getTime());
+      })
+    );
+
+    it('getLastEvent devrait renvoyer le ResultEventModel le plus récent',
+      fakeAsync(() => {
+        jasmine.clock().tick(2);
+        const creationDate = new Date();
+        resultService.addResult({id: existingId, idOwner: 76, idRecipients: [42], isSeen: false, eventResults: [], contentOfResult: 'Test46'});
+        const result = allResults.find(res => res.id === existingId);
+        expect(resultService.getLastEvent(result)).toBeDefined();
+        expect(resultService.getLastEvent(result).createdAt.getTime()).toEqual(creationDate.getTime());
+
+        jasmine.clock().tick(2);
+        const seenDate = new Date();
+        resultService.seenResult(existingId);
+        expect(resultService.getLastEvent(result).createdAt.getTime()).toEqual(seenDate.getTime());
+
+        resultService.unseenResult(existingId);
+        expect(resultService.getLastEvent(result).createdAt.getTime()).toEqual(seenDate.getTime());
+
+      })
+    );
+  });
 });
