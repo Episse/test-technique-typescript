@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { ResultsReducer } from './store/reducers/results.reducers';
+import { ResultCardComponent } from './result/ResultCard/ResultCard.component';
+import { ResultListComponent } from './result/ResultList/ResultList.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ResultCardComponent,
+    ResultListComponent
   ],
   imports: [
     BrowserModule,
